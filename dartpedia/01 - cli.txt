@@ -1,0 +1,16 @@
+1) Qual comando gera um novo projeto Dart com os arquivos e a estrutura de diretorios necessarios ?
+
+a. dart create
+Porque ao utilizar o comando dart create ele cria um projeto dart e configura os arquivos e diretorios essenciais, como visto na aula ao utlizarmos o comando dart create cli
+
+2) Todo programa em Dart comeca a ser executado a partir de uma funcao especifica. Qual eh o nome dessa funcao e por que ela eh importante ?
+
+a. A main funcao. Eh o ponto de entrada onde a execucao do programa comeca.
+A palavra main significa principal, como um menu onde tem os pratos principais, dizendo que é ali onde o codigo deve ser executado.
+
+
+3) Em um projeto Dart CLI, onde voce deve colocar o arquivo que contem sua main funcao ?
+
+d. No bin/diretorio, pois esse eh o local padrao para os pontos de entrada da CLI do Dart.
+Porque o bin/diretorio é onde os codigos podem ser execltados, onde esta o código executavel.
+

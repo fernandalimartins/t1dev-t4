@@ -1,0 +1,132 @@
+/* 
+
+Path:		:/home/fernanda.lima/dartapedia/cli/bin
+Site		:
+Autor		:Fernanda Lima Martins <fernanda.l.martins@aluno.senai.br>
+Manutencao	:
+
+_____________________________________________________________________________
+
+Funcionamento:
+
+Esse programa é o inicio do projeto Dart, sendo utilizado para aprender sobre 
+essa linguagem.
+Ele funciona a partir de uma variavel definida previamente usando a estrutura
+de decisão (if e else) para dependendo do comando utilizado para fazer o 
+codigo funcionar uma mensagem diferente será mostrada ou 'Hello, Dart!' ou 
+'Dartpedia CLI version $version'.
+
+Data de criação: 26/03/2026
+
+_____________________________________________________________________________
+
+Histórico:
+
+v = versão
+. = implementação do versionamento
+0 = inicio do versionamento
+1 = próxima versão, 2 = próxima versão, 3 = próxima versão, e assim por diante.
+
+
+v.0.0.0 26/03/2026, Fernanda Lima:
+- Versão inicial
+//Tarefa 3(03 - lição 01): Execute seu primeiro prorama em dart v.0.0.0
+
+import 'package:cli/cli.dart' as cli;
+
+void main(List<String> arguments) {
+  print('Hello world: ${cli.calculate()}!');
+}
+
+-------------------------------------------------------------------------------
+v.0.0.1 26/03/2026, Fernanda Lima:
+- Apagou o import no inicio
+- Mudou a saudação
+//Tarefa 4(03 - lição 01): Faça sua primeiraa alteração no código
+
+void main(List<String> arguments) {
+  print('Hello, Dart!'); 
+}
+
+-------------------------------------------------------------------------------
+v.0.0.2 26/03/2026, Fernanda Lima:
+- Adicionou uma variavel
+- Adicionou estrutura de decisão (if e else)
+//Tarefa 1(04 - lição02): Implementar comandos de versao e ajuda
+
+const version = '0.0.1'; // Add this line
+
+void main(List<String> arguments) {
+  if (arguments.isEmpty) {
+    print('Hello, Dart!');
+  } else if (arguments.first == 'version') {
+    print('Dartpedia CLI version $version');
+  }
+}
+
+-------------------------------------------------------------------------------
+v.0.0.3 26/03/2026, Fernanda Lima:
+- Adicione uma printUsage funcao: Para tornar a saida mais amigavel ao 
+usuario, crie uma funcao separada para exibir as informacoes de uso. 
+Coloque essa funcao fora e abaixo da sua mainfuncao principal.
+//Tarefa 3(04 - Licao 02) - Adicione printUsage função
+
+const version = '0.0.1'; // Add this line
+
+void main(List<String> arguments) {
+  if (arguments.isEmpty) {
+    print('Hello, Dart!');
+  } else if (arguments.first == 'version') {
+    print('Dartpedia CLI version $version');
+  }
+}
+void printUsage() { // Add this new function
+  print(
+    "The following commands are valid: 'help', 'version', 'search <ARTICLE-TITLE>'"
+  );
+}
+
+-------------------------------------------------------------------------------
+v.0.0.4 02/04/2024, Fernanda Lima:
+- Implementar o help comando e refinar main 
+// Tarefa 4(04 - Licao 02): Adicione interatividade ao seu aplicativo
+
+const version = '0.0.4';
+
+void main(List<String> arguments) {
+  if (arguments.isEmpty || arguments.first == 'help') {
+    printUsage(); // Change this from 'Hello, Dart!'
+  } else if (arguments.first == 'version') {
+    print('Dartpedia CLI version $version');
+  } else {
+    printUsage(); // Catch-all for any unrecognized command.
+  }
+}
+void printUsage() { // Add this new function
+  print(
+    "The following commands are valid: 'help', 'version', 'search <ARTICLE-TITLE>'"
+  );
+	}
+-------------------------------------------------------------------------------
+*/
+
+// Código válido apartir daqui:
+
+
+const version = '0.0.4'; 
+
+void main(List<String> arguments) {
+  if (arguments.isEmpty || arguments.first == 'help') {
+    printUsage(); // Change this from 'Hello, Dart!'
+  } else if (arguments.first == 'version') {
+    print('Dartpedia CLI version $version');
+  } else {
+    printUsage(); // Catch-all for any unrecognized command.
+  }
+}
+
+void printUsage() { // Add this new function
+  print(
+    "The following commands are valid: 'help', 'version', 'search <ARTICLE-TITLE>'"
+  );
+}
