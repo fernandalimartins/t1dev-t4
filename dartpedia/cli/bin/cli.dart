@@ -803,7 +803,7 @@ Localize o else ifbloco na sua mainfunção que atualmente lida com o searchcoma
 
 No código de exemplo, mainnão há await chamada para searchWikipedia, o que significa que maino próprio não precisa ser marcado async.
 
-// Código: */ 
+// Código: 
 
 import 'dart:io';
 import 'package:http/http.dart' as http; // Add this line
@@ -866,9 +866,8 @@ Future<String> getWikipediaArticle(String articleTitle) async {
   return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
 }
 
-/*
 
-Saída padrão do código para ser executado:
+Saida padrão do codigo:
 
 Comando: dart bin/cli.dart
 
@@ -884,10 +883,63 @@ Você deve ver: Dartpedia CLI version 0.0.13
 
 Comando: dart bin/cli.dart search
 
-Você deve ver: Please provide na article title
+Você deve ver: Please provide an article
 
-Comando: dart bin/cli.dart search $articleTitle
+Comando: dart run bin/cli.dart wikipedia "Dart_(programming_language)"
 
-Você deve ver: 'Looking up articles about $articleTitle' 'Please wait' 'Here ya go!' '(pretend this is an article about $articleTitle'
+Você devera ver:
+Looking up articles about "Dart_(programming_language)". Please wait.
+{
+  "type": "standard",
+  "title": "Dart (programming language)",
+  "displaytitle": "<span class=\"mw-page-title-main\">Dart (programming language)</span>",
+  "namespace": {
+      "id": 0,
+      "text": ""
+    }
+
+  // ... (rest of the JSON output will be present but truncated here)
+
+}
+
+Comando: dart run bin/cli.dart wikipedia
+
+Você devera ver algo como:
+
+Please provide an article title.
+Flutter_(software)
+Looking up articles about "Flutter_(software)". Please wait.
+
+{
+  "type": "standard",
+  "title": "Dart (programming language)",
+  "displaytitle": "<span class=\"mw-page-title-main\">Dart (programming language)</span>",
+  "namespace": {
+      "id": 0,
+      "text": ""
+    }
+
+// ... (rest of the JSON output will be present but truncated here)
+
+}
+
+Comando: dart run bin/cli.dart wikipedia
+
+Você deverá ver algo como:
+Please provide an article title.
+Flutter_(software)
+Looking up articles about "Flutter_(software)". Please wait.
+{
+  "type": "standard",
+  "title": "Flutter (software)",
+  "displaytitle": "<span class=\"mw-page-title-main\">Flutter (software)</span>",
+  "namespace": {
+      "id": 0,
+      "text": ""
+  }
+
+// ... (rest of the JSON output will be present but truncated here)
+
+}
 
 -----------------------------------------------------------------------------*/
