@@ -805,7 +805,7 @@ No código de exemplo, mainnão há await chamada para searchWikipedia, o que si
 
 // Código: 
 
-*/
+
 
 import 'dart:io';
 import 'package:http/http.dart' as http; // Add this line
@@ -868,7 +868,7 @@ Future<String> getWikipediaArticle(String articleTitle) async {
   return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
 }
 
-/*
+
 
 Saida padrão do codigo:
 
@@ -946,3 +946,73 @@ Looking up articles about "Flutter_(software)". Please wait.
 }
 
 -----------------------------------------------------------------------------*/
+Data: 20/05/2026
+
+Descricao: Agora, substitua todo o conteúdo cli/bin/cli.dart (exceto a httpimportação) pela seguinte versão atualizada:
+
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:command_runner/command_runner.dart';
+
+void main(List<String> arguments) async { // main is now async and awaits the runner
+  var runner = CommandRunner(); // Create an instance of your new CommandRunner
+  await runner.run(arguments); // Call its run method, awaiting its Future<void>
+}
+
+//Código:
+
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:command_runner/command_runner.dart';
+
+void main(List<String> arguments) async { // main is now async and awaits the runner
+        var runner = CommandRunner(); // Create an instance of your new CommandRunner
+        await runner.run(arguments); // Call its run method, awaiting its Future<void>
+}
+
+void searchWikipedia(List<String>? arguments) async {
+        final String articleTitle;
+        
+        if (arguments == null || arguments.isEmpty) {
+                print('Please provide an article title.');
+                final inputFromStdin = stdin.readLineSync();
+                if (inputFromStdin == null || inputFromStdin.isEmpty) {
+                        print('No article title provided. Exiting.');
+                        return;
+                }
+                articleTitle = inputFromStdin;
+        } else {
+                articleTitle = arguments.join(' ');
+        }
+
+        print('Looking up articles about "$articleTitle". Please wait.');
+
+        
+        var articleContent = await getWikipediaArticle(articleTitle);
+        print(articleContent); 
+}
+
+void printUsage () {
+        print("The following commands are valid: 'help', 'version', 'search <ARTICLE-TITLE>'");
+}
+
+Future<String> getWikipediaArticle(String articleTitle) async {
+  final url = Uri.https(
+        'en.wikipedia.org', 
+        '/api/rest_v1/page/summary/$articleTitle', 
+        );
+        
+        final response = await http.get(url); 
+
+        if (response.statusCode == 200) {
+                return response.body; 
+        }
+
+        return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
+}
+
+Saida padrao ao executar o codigo:
+
+Comando: dart run bin/cli.dart wikipedia Computer_programming
+
+voce deve ver: CommandRunner received arguments: [wikipedia, Computer_programming] 
