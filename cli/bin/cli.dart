@@ -805,6 +805,8 @@ No código de exemplo, mainnão há await chamada para searchWikipedia, o que si
 
 // Código: 
 
+*/
+
 import 'dart:io';
 import 'package:http/http.dart' as http; // Add this line
 
@@ -866,6 +868,7 @@ Future<String> getWikipediaArticle(String articleTitle) async {
   return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
 }
 
+/*
 
 Saida padrão do codigo:
 
