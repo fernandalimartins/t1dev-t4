@@ -945,11 +945,13 @@ Looking up articles about "Flutter_(software)". Please wait.
 
 }
 
------------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------
+Versao: 0.0.14
+
 Data: 20/05/2026
 
 Descricao: Agora, substitua todo o conteúdo cli/bin/cli.dart (exceto a httpimportação) pela seguinte versão atualizada:
-
+*/
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:command_runner/command_runner.dart';
@@ -1010,9 +1012,11 @@ Future<String> getWikipediaArticle(String articleTitle) async {
 
         return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
 }
-
+/*
 Saida padrao ao executar o codigo:
 
 Comando: dart run bin/cli.dart wikipedia Computer_programming
 
 voce deve ver: CommandRunner received arguments: [wikipedia, Computer_programming] 
+*/
+
