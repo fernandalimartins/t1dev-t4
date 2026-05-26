@@ -951,7 +951,7 @@ Versao: 0.0.14
 Data: 20/05/2026
 
 Descricao: Agora, substitua todo o conteúdo cli/bin/cli.dart (exceto a httpimportação) pela seguinte versão atualizada:
-*/
+
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:command_runner/command_runner.dart';
@@ -960,7 +960,7 @@ void main(List<String> arguments) async { // main is now async and awaits the ru
   var runner = CommandRunner(); // Create an instance of your new CommandRunner
   await runner.run(arguments); // Call its run method, awaiting its Future<void>
 }
-
+*/
 //Código:
 
 import 'dart:io';
