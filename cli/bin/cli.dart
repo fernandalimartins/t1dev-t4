@@ -1038,9 +1038,8 @@ void main(List<String> arguments) {
   var commandRunner = CommandRunner()..addCommand(HelpCommand());
   commandRunner.run(arguments);
 }
-*/
 //Código:
-import 'package:command_runner/lib/command_runner.dart';
+import 'package:command_runner/command_runner.dart';
 
 const version = '0.0.1';
 

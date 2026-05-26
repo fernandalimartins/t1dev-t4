@@ -942,4 +942,35 @@ Looking up articles about "Flutter_(software)". Please wait.
 
 }
 
------------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------
+
+Versao: 0.0.14
+
+Data: 25/05/2026
+
+Descricao do codigo: 
+Modificar cli/bin/cli.dart para usar o novo Runner de comando e, e Comando de Ajuda.O.
+
+Abrir o cli/bin/cli.dart arquivo.
+
+Substitua o código existente pelo seguinte:
+
+import 'package:command_runner/command_runner.dart';
+
+const version = '0.0.1';
+
+void main(List<String> arguments) {
+  var commandRunner = CommandRunner()..addCommand(HelpCommand());
+  commandRunner.run(arguments);
+}
+*/
+//Código:
+import 'package:command_runner/command_runner.dart';
+
+const version = '0.0.1';
+
+void main(List<String> arguments) {
+  var commandRunner = CommandRunner()..addCommand(HelpCommand());
+  commandRunner.run(arguments);
+}
+
