@@ -1,0 +1,21 @@
+{
+  "roots": [
+    "cli"
+  ],
+  "packages": [
+    {
+      "name": "cli",
+      "version": "1.0.0",
+      "dependencies": [
+        "args"
+      ],
+      "devDependencies": []
+    },
+    {
+      "name": "args",
+      "version": "2.7.0",
+      "dependencies": []
+    }
+  ],
+  "configVersion": 1
+}
