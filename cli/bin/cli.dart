@@ -1038,7 +1038,7 @@ void main(List<String> arguments) {
   var commandRunner = CommandRunner()..addCommand(HelpCommand());
   commandRunner.run(arguments);
 }
-//Código:*/
+//Código: */
 
 import 'package:command_runner/command_runner.dart';
 
@@ -1048,6 +1048,7 @@ void main(List<String> arguments) {
   var commandRunner = CommandRunner()..addCommand(HelpCommand());
   commandRunner.run(arguments);
 }
+<<<<<<< HEAD
  var commandRunner = CommandRunner(
     onError: (Object error) {
       if (error is Error) {
@@ -1060,3 +1061,4 @@ void main(List<String> arguments) {
   )..addCommand(HelpCommand());
   commandRunner.run(arguments);
 }
+
