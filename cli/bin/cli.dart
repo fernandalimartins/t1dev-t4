@@ -960,7 +960,7 @@ void main(List<String> arguments) async { // main is now async and awaits the ru
   var runner = CommandRunner(); // Create an instance of your new CommandRunner
   await runner.run(arguments); // Call its run method, awaiting its Future<void>
 }
-*/
+
 //Código:
 
 import 'dart:io';
@@ -1012,11 +1012,41 @@ Future<String> getWikipediaArticle(String articleTitle) async {
 
         return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
 }
-/*
+
 Saida padrao ao executar o codigo:
 
 Comando: dart run bin/cli.dart wikipedia Computer_programming
 
 voce deve ver: CommandRunner received arguments: [wikipedia, Computer_programming] 
-*/
+-------------------------------------------------------------------------------
+Versao: 0.0.15
+
+Data: 25/05/2026
+
+Descricao do codigo: 
+Modificar cli/bin/cli.dart para usar o novo Runner de comando e, e Comando de Ajuda.O.
+
+Abrir o cli/bin/cli.dart arquivo.
+
+Substitua o código existente pelo seguinte:
+
+import 'package:command_runner/command_runner.dart';
+
+const version = '0.0.1';
+
+void main(List<String> arguments) {
+  var commandRunner = CommandRunner()..addCommand(HelpCommand());
+  commandRunner.run(arguments);
+}
+//Código: */
+
+import 'package:command_runner/command_runner.dart';
+
+const version = '0.0.1';
+
+void main(List<String> arguments) {
+  var commandRunner = CommandRunner()..addCommand(HelpCommand());
+  commandRunner.run(arguments);
+}
+
 

@@ -1,9 +1,8 @@
+import 'dart:async'; // New import
 import 'dart:collection'; // New import
 import '../command_runner.dart';
-import 'dart:async';
 
 enum OptionType { flag, option }
-
 // Paste this new class below the enum you added
 abstract class Argument {
   String get name;
@@ -17,7 +16,6 @@ abstract class Argument {
 
   String get usage;
 }
-
 class Option extends Argument {
   Option(
     this.name, {
@@ -53,10 +51,9 @@ class Option extends Argument {
     return '--$name: $help';
   }
 }
-
 // Add this class below the Option class
 abstract class Command extends Argument {
-  @override
+ @override
   String get name;
 
   String get description;
@@ -73,15 +70,16 @@ abstract class Command extends Argument {
 
   @override
   String? valueHelp;
-}
 
   final List<Option> _options = [];
 
-  UnmodifiableSetView<Option> get options =>
+   UnmodifiableSetView<Option> get options =>
       UnmodifiableSetView(_options.toSet());
-}
 
- // A flag is an [Option] that's treated as a boolean.
+
+  // Add the following lines to the bottom of your Command class:
+
+  // A flag is an [Option] that's treated as a boolean.
   void addFlag(String name, {String? help, String? abbr, String? valueHelp}) {
     _options.add(
       Option(
@@ -114,10 +112,9 @@ abstract class Command extends Argument {
       ),
     );
   }
-}
+  
 
-
-// Add the following lines to the bottom of your Command class:
+  // Add the following lines to the bottom of your Command class:
   FutureOr<Object?> run(ArgResults args);
 
   @override
@@ -125,7 +122,10 @@ abstract class Command extends Argument {
     return '$name:  $description';
   }
 }
-ass ArgResults {
+
+
+// Add this class to the end of the file
+class ArgResults {
   Command? command;
   String? commandArg;
   Map<Option, Object?> options = {};
@@ -155,3 +155,6 @@ ass ArgResults {
     return (option: mapEntry.key, input: mapEntry.value);
   }
 }
+
+
+
