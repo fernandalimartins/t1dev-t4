@@ -1,12 +1,12 @@
-import 'dart:async'; // Add this line
+import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
 
 import 'arguments.dart';
-import 'exceptions.dart'; // Add this line
+import 'exceptions.dart';
 
 class CommandRunner {
-  // Add a constructor that accepts the optional callback.
+  // Construtor aceitando o callback opcional de erro
   CommandRunner({this.onError});
 
   final Map<String, Command> _commands = <String, Command>{};
@@ -14,34 +14,25 @@ class CommandRunner {
   UnmodifiableSetView<Command> get commands =>
       UnmodifiableSetView<Command>(<Command>{..._commands.values});
 
-  // Define the onError property.
+  // Propriedade onError definida corretamente
   FutureOr<void> Function(Object)? onError;
 
-  final Map<String, Command> _commands = <String, Command>{};
-
-  UnmodifiableSetView<Command> get commands =>
-      UnmodifiableSetView<Command>(<Command>{..._commands.values});
-
+  // Método run unificado com o bloco try-catch correto
   Future<void> run(List<String> input) async {
-    final ArgResults results = parse(input);
-    if (results.command != null) {
-      Object? output = await results.command!.run(results);
-      print(output.toString());
-try {
-    final ArgResults results = parse(input);
-    if (results.command != null) {
-      Object? output = await results.command!.run(results);
-      print(output.toString());
-    }
-  } on Exception catch (exception) {
-    if (onError != null) {
-      onError!(exception);
-    } else {
-      rethrow;
+    try {
+      final ArgResults results = parse(input);
+      if (results.command != null) {
+        Object? output = await results.command!.run(results);
+        print(output.toString());
+      }
+    } on Exception catch (exception) {
+      if (onError != null) {
+        onError!(exception);
+      } else {
+        rethrow;
+      }
     }
   }
-    }
- }
 
   void addCommand(Command command) {
     // TODO: handle error (Commands can't have names that conflict)
@@ -49,115 +40,110 @@ try {
     command.runner = this;
   }
 
-  // [Step 6 update] This method is replaced entirely.
-ArgResults parse(List<String> input) {
-  ArgResults results = ArgResults();
-  if (input.isEmpty) return results;
+  // Método parse completo e sem duplicações
+  ArgResults parse(List<String> input) {
+    ArgResults results = ArgResults();
+    if (input.isEmpty) return results;
 
-  // Throw an exception if the command is not recognized.
-  if (_commands.containsKey(input.first)) {
-    results.command = _commands[input.first];
-    input = input.sublist(1);
-  } else {
-    throw ArgumentException(
-      'The first word of input must be a command.',
-      null,
-      input.first,
-    );
-  }
+    // Lança uma exceção se o comando não for reconhecido
+    if (_commands.containsKey(input.first)) {
+      results.command = _commands[input.first];
+      input = input.sublist(1);
+    } else {
+      throw ArgumentException(
+        'The first word of input must be a command.',
+        null,
+        input.first,
+      );
+    }
 
-  // Throw an exception if multiple commands are provided.
-  if (results.command != null &&
-      input.isNotEmpty &&
-      _commands.containsKey(input.first)) {
-    throw ArgumentException(
-      'Input can only contain one command. Got ${input.first} and ${results.command!.name}',
-      null,
-      input.first,
-    );
-  }
+    // Lança uma exceção se múltiplos comandos forem fornecidos
+    if (results.command != null &&
+        input.isNotEmpty &&
+        _commands.containsKey(input.first)) {
+      throw ArgumentException(
+        'Input can only contain one command. Got ${input.first} and ${results.command!.name}',
+        null,
+        input.first,
+      );
+    }
 
-  // Section: Handle options, including flags.
-  Map<Option, Object?> inputOptions = {};
-  int i = 0;
-  while (i < input.length) {
-    if (input[i].startsWith('-')) {
-      var base = _removeDash(input[i]);
-      // Throw an exception if an option is not recognized for the given command.
-      var option = results.command!.options.firstWhere(
-        (option) => option.name == base || option.abbr == base,
-        orElse: () {
+    // Seção: Tratar opções, incluindo flags
+    Map<Option, Object?> inputOptions = {};
+    int i = 0;
+    while (i < input.length) {
+      if (input[i].startsWith('-')) {
+        var base = _removeDash(input[i]);
+        
+        // Lança exceção se a opção não for reconhecida pelo comando
+        var option = results.command!.options.firstWhere(
+          (option) => option.name == base || option.abbr == base,
+          orElse: () {
+            throw ArgumentException(
+              'Unknown option ${input[i]}',
+              results.command!.name,
+              input[i],
+            );
+          },
+        );
+
+        if (option.type == OptionType.flag) {
+          inputOptions[option] = true;
+          i++;
+          continue;
+        }
+
+        if (option.type == OptionType.option) {
+          // Lança exceção se a opção necessita de argumento mas nenhum foi passado
+          if (i + 1 >= input.length) {
+            throw ArgumentException(
+              'Option ${option.name} requires an argument',
+              results.command!.name,
+              option.name,
+            );
+          }
+          if (input[i + 1].startsWith('-')) {
+            throw ArgumentException(
+              'Option ${option.name} requires an argument, but got another option ${input[i + 1]}',
+              results.command!.name,
+              option.name,
+            );
+          }
+          var arg = input[i + 1];
+          inputOptions[option] = arg;
+          i++;
+        }
+      } else {
+        // Bloco adicionado: Trata os argumentos posicionais do comando
+        if (results.commandArg != null && results.commandArg!.isNotEmpty) {
           throw ArgumentException(
-            'Unknown option ${input[i]}',
+            'Commands can only have up to one argument.',
             results.command!.name,
             input[i],
           );
-        },
-      );
-
-      if (option.type == OptionType.flag) {
-        inputOptions[option] = true;
-        i++;
-        continue;
-      }
-
-      if (option.type == OptionType.option) {
-        // Throw an exception if an option requires an argument but none is given.
-        if (i + 1 >= input.length) {
-          throw ArgumentException(
-            'Option ${option.name} requires an argument',
-            results.command!.name,
-            option.name,
-          );
         }
-        if (input[i + 1].startsWith('-')) {
-          throw ArgumentException(
-            'Option ${option.name} requires an argument, but got another option ${input[i + 1]}',
-            results.command!.name,
-            option.name,
-          );
-        }
-        var arg = input[i + 1];
-        inputOptions[option] = arg;
-        i++;
+        results.commandArg = input[i];
       }
-    } else {
-      // Throw an exception if more than one positional argument is provided.
-      if (results.commandArg != null && results.commandArg!.isNotEmpty) {
-        throw ArgumentException(
-          'Commands can only have up to one argument.',
-          results.command!.name,
-          input[i],
-        );
-      }
-      results.commandArg = input[i];
+      i++;
     }
-    i++;
+    results.options = inputOptions;
+
+    return results;
   }
-  results.options = inputOptions;
 
-  return results;
-}
-
-String _removeDash(String input) {
-  if (input.startsWith('--')) {
-    return input.substring(2);
+  String _removeDash(String input) {
+    if (input.startsWith('--')) {
+      return input.substring(2);
+    }
+    if (input.startsWith('-')) {
+      return input.substring(1);
+    }
+    return input;
   }
-  if (input.startsWith('-')) {
-    return input.substring(1);
-  }
-  return input;
-}
 
-
-  // Returns usage for the executable only.
-  // Should be overridden if you aren't using [HelpCommand]
-  // or another means of printing usage.
-
+  // Getter de uso (usage) ao final da classe
   String get usage {
     final exeFile = Platform.script.path.split('/').last;
     return 'Usage: dart bin/$exeFile <command> [commandArg?] [...options?]';
   }
 }
-
-
