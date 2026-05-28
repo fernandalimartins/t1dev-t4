@@ -802,7 +802,7 @@ Descrição: Por fim, atualize sua mainfunção para chamar a nova searchWikiped
 Localize o else ifbloco na sua mainfunção que atualmente lida com o searchcomando. Altere o nome do comando de searchpara wikipediae atualize a chamada da função.
 
 No código de exemplo, mainnão há await chamada para searchWikipedia, o que significa que maino próprio não precisa ser marcado async.
-
+*/
 // Código: 
 
 import 'dart:io';
@@ -866,7 +866,7 @@ Future<String> getWikipediaArticle(String articleTitle) async {
   return 'Error: Failed to fetch article "$articleTitle". Status code: ${response.statusCode}';
 }
 
-
+/*
 Saida padrão do codigo:
 
 Comando: dart bin/cli.dart
