@@ -1,4 +1,4 @@
-import 'dart.io'; 
+import 'dart:io'; 
 
 const String ansiEscapeLiteral = '\x1B'; 
 
@@ -27,13 +27,28 @@ Future<void> _delayedPrint(String text, {int duration = 0}) async {
 /// As a demo, only includes colors this program cares about.
 /// If you want to use more colors, add them here.
 enum ConsoleColor {
-   // ... (existing enum values)
+  /// Sky blue - #b8eafe
+  lightBlue(184, 234, 254),
+
+  /// Accent colors from Dart's brand guidelines
+  /// Warm red - #F25D50
+  red(242, 93, 80),
+
+  /// Light yellow - #F9F8C4
+  yellow(249, 248, 196),
+
+  /// Light grey, good for text, #F8F9FA
+  grey(240, 240, 240),
+
+  ///
+  white(255, 255, 255);
 
   const ConsoleColor(this.r, this.g, this.b);
 
   final int r;
   final int g;
   final int b;
+
 
   /// Change text color for all future output (until reset)
   /// ```dart
