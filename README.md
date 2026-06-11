@@ -127,12 +127,24 @@ Para rodar o código na sua máquina, é necessário ter o Dart instalado.
    git clone https://github.com/fernandalimartins/t1dev-t4.git
 
 2. Entar na pasta do projeto:
-   cd t1dev-t4
+   cd Dartpedia
 
 3. Atualize e baixe as dependências do projeto:
    dart pub get
 
-4. Execute o arquivo principal (ajuste o caminho se o arquivo de execução da equipe estiver em outra pasta): dart run bin/main.dart
+4. Entrar no cli:
+   cd cli
+
+5. Executar o comando:
+   dart run bin/cli.dart help --verbose
+
+   A saída deverá ser:
+   Usage: dart bin/cli.dart <command> [commandArg?] [...options?] 
+   help:  Prints usage information to the command line. 
+           Prints this usage information 
+           Options: 
+           -v,--verbose: When true, this command will print each command and its options. 
+           -c,--command: When a command is passed as an argument, prints only that command's verbose usage.
 
 —------------------------------------------------------------------------------------------------------------------------
 
@@ -142,7 +154,7 @@ Estrutura de Pastas
 Organização padrão que estamos utilizando para o projeto CLI:
 
 
-t1dev-t4/
+Dartpedia/
 
 ├── bin/          # Ponto de entrada com o arquivo executável principal
 
