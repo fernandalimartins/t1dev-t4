@@ -144,7 +144,11 @@ Organização padrão que estamos utilizando para o projeto CLI:
 
 t1dev-t4/
 ├── bin/          # Ponto de entrada com o arquivo executável principal
+
 ├── lib/          # Regras de negócio, classes e funções desenvolvidas nas lições
+
 ├── test/         # Arquivos de testes (planejado para a lição 9)
+
 ├── pubspec.yaml  # Configurações do projeto e pacotes utilizados
+
 └── README.md     # Esta documentação
