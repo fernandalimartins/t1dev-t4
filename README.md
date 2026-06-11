@@ -143,6 +143,7 @@ Organização padrão que estamos utilizando para o projeto CLI:
 
 
 t1dev-t4/
+
 ├── bin/          # Ponto de entrada com o arquivo executável principal
 
 ├── lib/          # Regras de negócio, classes e funções desenvolvidas nas lições
