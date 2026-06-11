@@ -6,24 +6,26 @@ import 'arguments.dart';
 import 'exceptions.dart';
 
 class CommandRunner {
-  // Construtor aceitando o callback opcional de erro
-  CommandRunner({this.onError});
+  CommandRunner({this.onOutput, this.onError});
+
+  FutureOr<void> Function(String)? onOutput;
+  FutureOr<void> Function(Object)? onError;
 
   final Map<String, Command> _commands = <String, Command>{};
 
   UnmodifiableSetView<Command> get commands =>
       UnmodifiableSetView<Command>(<Command>{..._commands.values});
 
-  // Propriedade onError definida corretamente
-  FutureOr<void> Function(Object)? onError;
-
-  // Método run unificado com o bloco try-catch correto
   Future<void> run(List<String> input) async {
     try {
       final ArgResults results = parse(input);
       if (results.command != null) {
         Object? output = await results.command!.run(results);
-        print(output.toString());
+        if (onOutput != null) {
+          await onOutput!(output.toString());
+        } else {
+          print(output.toString());
+        }
       }
     } on Exception catch (exception) {
       if (onError != null) {
@@ -35,17 +37,14 @@ class CommandRunner {
   }
 
   void addCommand(Command command) {
-    // TODO: handle error (Commands can't have names that conflict)
     _commands[command.name] = command;
     command.runner = this;
   }
 
-  // Método parse completo e sem duplicações
   ArgResults parse(List<String> input) {
     ArgResults results = ArgResults();
     if (input.isEmpty) return results;
 
-    // Lança uma exceção se o comando não for reconhecido
     if (_commands.containsKey(input.first)) {
       results.command = _commands[input.first];
       input = input.sublist(1);
@@ -57,7 +56,6 @@ class CommandRunner {
       );
     }
 
-    // Lança uma exceção se múltiplos comandos forem fornecidos
     if (results.command != null &&
         input.isNotEmpty &&
         _commands.containsKey(input.first)) {
@@ -68,14 +66,12 @@ class CommandRunner {
       );
     }
 
-    // Seção: Tratar opções, incluindo flags
     Map<Option, Object?> inputOptions = {};
     int i = 0;
     while (i < input.length) {
       if (input[i].startsWith('-')) {
         var base = _removeDash(input[i]);
-        
-        // Lança exceção se a opção não for reconhecida pelo comando
+
         var option = results.command!.options.firstWhere(
           (option) => option.name == base || option.abbr == base,
           orElse: () {
@@ -94,7 +90,6 @@ class CommandRunner {
         }
 
         if (option.type == OptionType.option) {
-          // Lança exceção se a opção necessita de argumento mas nenhum foi passado
           if (i + 1 >= input.length) {
             throw ArgumentException(
               'Option ${option.name} requires an argument',
@@ -114,7 +109,6 @@ class CommandRunner {
           i++;
         }
       } else {
-        // Bloco adicionado: Trata os argumentos posicionais do comando
         if (results.commandArg != null && results.commandArg!.isNotEmpty) {
           throw ArgumentException(
             'Commands can only have up to one argument.',
@@ -141,7 +135,6 @@ class CommandRunner {
     return input;
   }
 
-  // Getter de uso (usage) ao final da classe
   String get usage {
     final exeFile = Platform.script.path.split('/').last;
     return 'Usage: dart bin/$exeFile <command> [commandArg?] [...options?]';
