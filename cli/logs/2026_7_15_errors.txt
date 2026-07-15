@@ -1,0 +1,2 @@
+[2026-07-15 16:18:38.913945 - errors] WARNING: ArgumentException: Please include a search term 
+[2026-07-15 16:20:09.419762 - errors] WARNING: ArgumentException: Commands can only have up to one argument. 

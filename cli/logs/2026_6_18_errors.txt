@@ -1,0 +1,3 @@
+[2026-06-18 19:18:34.808213 - errors] WARNING: ArgumentException: The first word of input must be a command. 
+[2026-06-18 19:35:19.234796 - errors] WARNING: HttpException: HttpException: , uri = https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=blahblahblahblah 
+[2026-06-18 19:35:19.242158 - errors] INFO: Usage: dart bin/cli.dart <command> [commandArg?] [...options?] 
